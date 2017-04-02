@@ -243,7 +243,7 @@ class Reminder
             $mail->setSubject($texts->getSubject());
             $mail->setRecipients(
                 array(
-                    $this->dest->email => $this->dest->sname
+                    $this->dest->getEmail() => $this->dest->sname
                 )
             );
             $mail->setMessage($texts->getBody());
@@ -257,7 +257,7 @@ class Reminder
                 ),
                 array(
                     $this->dest->sname,
-                    $this->dest->email,
+                    $this->dest->getEmail(),
                     $this->dest->days_remaining
                 ),
                 _T("%name <%mail> (%days days)")
@@ -373,7 +373,7 @@ class Reminder
                     $this->replaces['name_adh'] = custom_html_entity_decode($value->sname);
                     $this->replaces['firstname_adh'] = custom_html_entity_decode($value->surname);
                     $this->replaces['lastname_adh'] = custom_html_entity_decode($value->name);
-                    if ($value->email != '') {
+                    if ($value->getEmail() != '') {
                         $this->nomail = false;
                     }
                     if ($this->type === self::LATE) {
