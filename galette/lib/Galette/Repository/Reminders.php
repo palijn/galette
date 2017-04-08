@@ -99,7 +99,13 @@ class Reminders
                 'reminder_type'
             ),
             $select::JOIN_LEFT
+        )->join(
+            array('p' => PREFIX_DB . Members::TABLE),
+            'a.' . Members::PK . '=p.' . Members::PK,
+            array('email_adh'),
+            $select::JOIN_LEFT
         )->where('a.email_adh != \'\'')
+            ->where('p.email_adh != \'\'')
             ->where('a.activite_adh=true')
             ->where('bool_exempt_adh=false');
 
