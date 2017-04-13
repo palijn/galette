@@ -2315,6 +2315,7 @@ $app->get(
             Members::MEMBERSHIP_LATE);
         $filters->membership_filter = $membership;
 
+        //TODO: filter on reminder may take care of parent email as well
         $mail = ($args['mail'] === __('withmail', 'routes') ?
             Members::FILTER_W_EMAIL :
             Members::FILTER_WO_EMAIL);
