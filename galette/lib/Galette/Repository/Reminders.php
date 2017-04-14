@@ -161,7 +161,7 @@ class Reminders
                         $second = clone $due_date;
                         $first->modify('1 month');
                         $second->modify('2 month');
-                        if ($now >= $second || $now >= $first) {
+                        if ($r->last_reminder == null || $now >= $second || $now >= $first) {
                             if ($r->last_reminder == '') {
                                 $date_checked = true;
                             } else {
