@@ -9,6 +9,9 @@
                 <li><a href="#mail">{_T string="E-Mail"}</a></li>
                 <li><a href="#labels">{_T string="Labels"}</a></li>
                 <li><a href="#cards">{_T string="Cards"}</a></li>
+{if $login->isAdmin()}
+                <li><a href="#security">{_T string="Security"}</a></li>
+{/if}
 {if $login->isSuperAdmin()}
                 <li><a href="#admin">{_T string="Admin"}</a></li>
 {/if}
@@ -421,6 +424,46 @@
                     <span class="exemple">{_T string="(Integer)"}</span>
                 </p>
             </fieldset>
+
+{if $login->isAdmin()}
+            <fieldset class="cssform" id="security">
+                <legend>{_T string="Security parameters"}</legend>
+                <p>
+                    <label for="pref_password_lenght" class="bline tooltip" title="{_T string="Minimum password length required for all accounts. Minimal size is 6."}">{_T string="Password length:"}</label>
+                    <span class="tip">{_T string="Minimum password length required for all accounts. Minimal size is 6."}</span>
+                    <input type="number" name="pref_password_lenght" id="pref_password_lenght" value="{$pref.pref_password_lenght}" min="6" size="7" required="required"/>
+                </p>
+                <p>
+                    <label for="pref_password_blacklist" class="bline tooltip" title="{_T string="Enable password blacklists"}">{_T string="Enable blacklists:"}</label>
+                    <span class="tip">{_T string="If you enable blacklists; it will not be possible to use any of blacklisted passwords. A list is provided along with Galette, but you can add you owns."}</span>
+                    <input type="checkbox" name="pref_password_blacklist" id="pref_password_blacklist" value="1"{if $pref.pref_password_blacklist eq 1} checked="checked"{/if}/>
+                </p>
+                <p>
+                    <label for="pref_password_strength" class="bline tooltip" title="{_T string="Enforce password strength"}">{_T string="Password strength:"}</label>
+                    <span class="tip">
+                        {_T string="Enforce minimal password strength for all password."} {_T string="Note that with any enforcement level, user cannot use his username as password."}<br/>
+                        {_T string="Levels are:"}<br/>
+                        <em>* {_T string="None"}</em> {_T string="for no strength enforcement"}<br/>
+                        <em>* {_T string="Weak"}</em> {_T string="require at least one lower and capital"}<br/>
+                        <em>* {_T string="Medium"}</em> {_T string="require at least one lower and capital and number"}<br/>
+                        <em>* {_T string="Strong"}</em> {_T string="require at least one lower and capital and number (recommended for most usages)"}</br/>
+                        <em>* {_T string="Very Strong"}</em> {_T string="requires very high strength; but is not user friendly"}
+                    </span>
+                    <select name="pref_password_strength" id="pref_password_strength">
+                        <option value="{Galette\Core\Preferences::PWD_NONE}"{if $pref.pref_password_strength eq constant('Galette\Core\Preferences::PWD_NONE')} selected="selected"{/if}>{_T string="None (default)"}</option>
+                        <option value="{Galette\Core\Preferences::PWD_WEAK}"{if $pref.pref_password_strength eq constant('Galette\Core\Preferences::PWD_WEAK')} selected="selected"{/if}>{_T string="Weak"}</option>
+                        <option value="{Galette\Core\Preferences::PWD_MEDIUM}"{if $pref.pref_password_strength eq constant('Galette\Core\Preferences::PWD_MEDIUM')} selected="selected"{/if}>{_T string="Medium"}</option>
+                        <option value="{Galette\Core\Preferences::PWD_STRONG}"{if $pref.pref_password_strength eq constant('Galette\Core\Preferences::PWD_STRONG')} selected="selected"{/if}>{_T string="Strong"}</option>
+                        <option value="{Galette\Core\Preferences::PWD_VERY_STRONG}"{if $pref.pref_password_strength eq constant('Galette\Core\Preferences::PWD_VERY_STRONG')} selected="selected"{/if}>{_T string="Very strong"}</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="test_password_strength" class="bline tooltip" title="{_T string="Test a password with current selected values."}">{_T string="Test a password:"}</label>
+                    <span class="tip">{_T string="Test a password with current selected values."}<br/>{_T string="Do not forget to save your preferences if you're happy with the result ;)"}</span>
+                    <input type="password" id="test_password_strength"/>
+                </p>
+            </fieldset>
+{/if}
 
 {if $login->isSuperAdmin()}
             <fieldset class="cssform" id="admin">

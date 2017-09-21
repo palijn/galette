@@ -74,6 +74,17 @@ class Preferences
     /** Public pages are visibles for admin and staff members only */
     const PUBLIC_PAGES_VISIBILITY_PRIVATE = 2;
 
+    /** No password strength */
+    const PWD_NONE = 0;
+    /** Weak password strength */
+    const PWD_WEAK = 2;
+    /** Medium password strength */
+    const PWD_MEDIUM = 3;
+    /** Strong password strength */
+    const PWD_STRONG = 4;
+    /** Very strong password strength */
+    const PWD_VERY_STRONG = 5;
+
     private static $fields = array(
         'nom_pref',
         'val_pref'
@@ -153,7 +164,11 @@ class Preferences
         'pref_rss_url' => 'http://galette.eu/dc/index.php/feed/atom',
         'pref_show_id' => false,
         'pref_adhesion_form' => '\Galette\IO\PdfAdhesionForm',
-        'pref_mail_allow_unsecure' => false
+        'pref_mail_allow_unsecure' => false,
+        /* Security related */
+        'pref_password_lenght' => 6,
+        'pref_password_blacklist' => false,
+        'pref_password_strength' => self::PWD_NONE
     );
 
     /**
