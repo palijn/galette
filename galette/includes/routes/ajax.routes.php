@@ -186,4 +186,14 @@ $app->group(__('/ajax', 'routes'), function () {
             return $response->withJson($ret);
         }
     )->setName('suggestCountry');
+
+    $this->post(
+        __('/password', 'routes') . __('/strength', 'routes'),
+        function ($request, $response) {
+            $post = $request->getParsedBody();
+            $pass = new \Galette\Util\Password($this->preferences);
+            $pass->getStrenght($post['value'], $post['pref_password_strength']);
+            return $response->withJson(['score' => 4]);
+        }
+    )->setName('checkPassword');
 });

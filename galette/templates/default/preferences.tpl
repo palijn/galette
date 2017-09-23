@@ -461,6 +461,8 @@
                     <label for="test_password_strength" class="bline tooltip" title="{_T string="Test a password with current selected values."}">{_T string="Test a password:"}</label>
                     <span class="tip">{_T string="Test a password with current selected values."}<br/>{_T string="Do not forget to save your preferences if you're happy with the result ;)"}</span>
                     <input type="password" id="test_password_strength"/>
+                    <meter max="4" id="password-strength-meter"></meter>
+                    <span id="password-strength-text"></span>
                 </p>
             </fieldset>
 {/if}
@@ -589,6 +591,45 @@
                             }
                         }
                     });
+                });
+
+                $('#test_password_strength').on('keyup', function() {
+                    var strength = {
+                        0: "Worst ☹",
+                        1: "Bad ☹",
+                        2: "Weak ☹",
+                        3: "Good ☺",
+                        4: "Strong ☻"
+                    }
+                    console.log(strength);
+
+                    $.ajax({
+                        url: '{path_for name="checkPassword"}',
+                        type: 'POST',
+                        data: {
+                            pref_password_lenght: $('#pref_password_lenght').val(),
+                            pref_password_blacklist: $('#pref_password_blacklist').is(':checked'),
+                            pref_password_strength: $('#pref_password_strength').val(),
+                            value: $('#test_password_strength').val()
+                        },
+                        {include file="js_loader.tpl"},
+                        success: function(res) {
+                            console.log(res);
+                            $('#password-strength-meter').val(res.score);
+                            //display message
+                            /*$.ajax({
+                                url: '{path_for name="ajaxMessages"}',
+                                method: "GET",
+                                success: function (message) {
+                                    $('#testEmail').prepend(message);
+                                }
+                            });*/
+                        },
+                        error: function () {
+                            alert('{_T string="An error occured sending test email :(" escape="js"}');
+                        }
+                    });
+
                 });
             });
 
