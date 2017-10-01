@@ -136,6 +136,24 @@ var _bind_legend = function() {
     });
 }
 
+var _initTooltips = function(selector) {
+    if (typeof(selector) == 'undefined') {
+        selector = '';
+    } else {
+        selector = selector + ' ';
+    }
+
+    //for tootltips
+    //first, we hide tooltips in the page
+    $(selector + '.tip').hide();
+    //and then, we show them on rollover
+    $(selector + '.tooltip').tooltip({
+        content: function(event, ui) {
+            return $(this).next().html();
+        }
+    });
+}
+
 $(function() {
     _messagesEffects();
     $('.debuginfos span').hide();
@@ -147,15 +165,7 @@ $(function() {
 
     $('#login').focus();
 
-    //for tootltips
-    //first, we hide tooltips in the page
-    $('.tip').hide();
-    //and then, we show them on rollover
-    $('.tooltip').tooltip({
-        content: function(event, ui) {
-            return $(this).next().html();
-        }
-    });
+    _initTooltips();
 
     $('.nojs').removeClass('nojs');
     $('#menu h1').each(function(){
